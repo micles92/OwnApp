@@ -1,7 +1,8 @@
 package com.micles92.controller;
 
-import com.micles92.dao.UserDao;
+
 import com.micles92.model.User;
+import com.micles92.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +23,11 @@ import java.util.List;
 @Controller
 public class UserController {
     @Autowired
-    private UserDao userDao;
+    UserService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String listUsers(Model model) throws SQLException {
-        List<User>users = userDao.findAll();
+        List<User>users = userService.findAll();
 
 
         model.addAttribute("users",users);
@@ -52,7 +53,7 @@ public class UserController {
        // String email = request.getParameter("email");
         User user = new User(email,login,password);
 
-        userDao.save(user);
+        userService.save(user);
 
 
         return  "redirect:/users";
@@ -61,7 +62,7 @@ public class UserController {
     @RequestMapping(value = "/edit-user/{id}", method = RequestMethod.GET)
     public String getEditUserView(Model model, @PathVariable("id") Long id) throws SQLException {
 
-        User user = userDao.findOne(id);
+        User user = userService.findOne(id);
         model.addAttribute("user",user);
 
 
@@ -77,14 +78,14 @@ public class UserController {
 
         User user = new User(id,email,login,null);
 
-        userDao.save(user);
+        userService.save(user);
 
         return "redirect:/users";
     }
 
     @RequestMapping(value = "/delete-user/{id}", method = RequestMethod.GET)
     public String deleteUser(@PathVariable("id") Long id) throws SQLException {
-        userDao.delete(id);
+        userService.delete(id);
         return "redirect:/users";
     }
 

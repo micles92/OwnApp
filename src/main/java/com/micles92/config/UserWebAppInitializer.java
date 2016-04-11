@@ -6,9 +6,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  * Created by lesiulol on 15.02.16.
  */
 public class UserWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{RootConfig.class};
+        return new Class<?>[0];
     }
 
     @Override
